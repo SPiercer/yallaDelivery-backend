@@ -5,8 +5,8 @@ import { UserRepository } from '../models/user/user.repository';
 import { User } from '../models/user/entities/user.entity';
 
 @Injectable()
-export class JwtStrategy<T extends User> extends PassportStrategy(Strategy) {
-  constructor(private userRepository: UserRepository<T>) {
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(private userRepository: UserRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,

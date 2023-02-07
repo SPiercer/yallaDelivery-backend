@@ -1,12 +1,17 @@
 import {
   Column,
+  Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
+import { Role } from '../../../common/enums/role.enum';
+import { Vendor } from '../../vendor/entities/vendor.entity';
 
-export abstract class User {
+@Entity('users')
+export class User {
   @PrimaryGeneratedColumn({ type: 'bigint', name: 'id', unsigned: true })
   id: string;
 
@@ -15,6 +20,12 @@ export abstract class User {
 
   @Column('varchar', { name: 'password', length: 255 })
   password: string;
+
+  @Column('enum', {
+    name: 'role',
+    enum: Role,
+  })
+  role: Role;
 
   @CreateDateColumn()
   created_at: Date;
