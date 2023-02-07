@@ -1,4 +1,3 @@
-import { Role } from '../../../common/enums/role.enum';
 import {
   Column,
   PrimaryGeneratedColumn,
@@ -16,12 +15,6 @@ export abstract class User {
 
   @Column('varchar', { name: 'password', length: 255 })
   password: string;
-
-  @Column({
-    type: 'enum',
-    enum: Role,
-  })
-  role: Role;
 
   @CreateDateColumn()
   created_at: Date;

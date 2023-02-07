@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from '../auth.service';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { Vendor } from '../../models/vendor/entities/vendor.entity';
 import { VendorRepository } from '../../models/vendor/vendor.repository';
 import { CreateVendorDto } from '../../models/vendor/dto/create-vendor.dto';
@@ -13,10 +13,7 @@ export class VendorAuthService implements AuthService<Vendor> {
   ) {}
 
   async validateUser(email: string, pass: string): Promise<Vendor | null> {
-    const user = await this.vendorRepository.findOne({
-      where: { email },
-    });
-
+    const user = await this.vendorRepository.findOne(email);
     if (
       user &&
       bcrypt.compareSync(pass, user.password) &&
@@ -29,7 +26,7 @@ export class VendorAuthService implements AuthService<Vendor> {
   }
 
   async login(user: Vendor) {
-    const payload = { username: user.email, role: user.role };
+    const payload = { username: user.email, uuid: user.id };
     return {
       user,
       access_token: this.jwtService.sign(payload),
@@ -37,9 +34,12 @@ export class VendorAuthService implements AuthService<Vendor> {
   }
 
   async register(dto: CreateVendorDto) {
-    const user = await this.vendorRepository.create({});
-    const payload = { username: user.email };
+    const result = await this.vendorRepository.create(dto);
+
+    const payload = { username: result.email, uuid: result.id };
+    const { password, ...user } = result;
     return {
+      user:{...user},
       access_token: this.jwtService.sign(payload),
     };
   }
