@@ -1,17 +1,22 @@
-import { IsEmail, IsNotEmpty, Min } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, Min, MinLength } from "class-validator";
+import { Match } from "../../../common/decorators/match.decorator";
 import { Role } from "../../../common/enums/role.enum";
 
-export abstract class CreateUserDto {
-
-    @IsEmail()
+export class CreateUserDto {
     @IsNotEmpty()
+    @IsEmail()
     email: string;
 
     @IsNotEmpty()
-    @Min(8)
+    @MinLength(7)
     password: string;   
 
     @IsNotEmpty()
+    @Match(CreateUserDto, (dto: CreateUserDto) => dto.password, { message: 'Password confirmation does not match password' })
+    passwordConfirmation: string;
+
+    @IsNotEmpty()
+    @IsEnum(Role)
     role: Role;
     
 }
