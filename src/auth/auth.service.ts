@@ -6,15 +6,18 @@ import { CreateUserDto } from '../models/user/dto/create-user.dto';
 import { UserRepository } from '../models/user/user.repository';
 import { Role } from '../common/enums/role.enum';
 import { Vendor } from '../models/vendor/entities/vendor.entity';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
 @Injectable()
 export class AuthService {
   constructor(
-    private userRepository: UserRepository,
-    private jwtService: JwtService,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
+    private readonly jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, pass: string): Promise<User | null> {
-    const user = await this.userRepository.findOne({ where: { email } });
+    const user = await this.entityManager.findOne(User,{ where: { email } });
     if (
       user &&
       bcrypt.compareSync(pass, user.password) &&
@@ -28,13 +31,12 @@ export class AuthService {
 
   async login(user: User) {
     const payload = { username: user.email, uuid: user.id };
-    const manager = this.userRepository.userRepository.manager;
+    const manager = this.entityManager;
     let vendor: Vendor;
     switch (user.role) {
       case Role.Vendor:
-        // find vendor
-        vendor = await manager.findOneBy(Vendor, {
-          user: { id: user.id },
+        vendor = await manager.findOne(Vendor, {
+          where: { user: { id: user.id } },
         });
         return {
           user,
@@ -51,7 +53,7 @@ export class AuthService {
   }
 
   async register(dto: CreateUserDto) {
-    const result = await this.userRepository.create(dto);
+    const result = await this.entityManager.create(User,dto);
 
     const payload = { username: result.email, uuid: result.id };
     const { password, ...user } = result;
