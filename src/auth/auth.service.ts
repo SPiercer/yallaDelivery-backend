@@ -32,10 +32,9 @@ export class AuthService {
   async login(user: User) {
     const payload = { username: user.email, uuid: user.id };
     const manager = this.entityManager;
-    let vendor: Vendor;
     switch (user.role) {
       case Role.Vendor:
-        vendor = await manager.findOne(Vendor, {
+        const vendor = await manager.findOne(Vendor, {
           where: { user: { id: user.id } },
         });
         return {

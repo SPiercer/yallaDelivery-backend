@@ -7,6 +7,10 @@ import { DBProviderModule } from './providers/database/mysql/provider.module';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './models/order/order.module';
+import { ModelsModule } from './product/models/models.module';
+import { CartModule } from './models/cart/cart.module';
+import { ProductModule } from './models/product/product.module';
+import { ModelsModule } from './product/models/models.module';
 
 @Module({
   imports: [
@@ -14,6 +18,9 @@ import { OrderModule } from './models/order/order.module';
     DBProviderModule,
     AuthModule,
     OrderModule,
+    ModelsModule,
+    ProductModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [
