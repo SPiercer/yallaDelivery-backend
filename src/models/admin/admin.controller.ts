@@ -12,11 +12,6 @@ export class AdminController {
     return this.adminService.create(createAdminDto);
   }
 
-  @Get()
-  findAll() {
-    return this.adminService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.adminService.findOne(+id);

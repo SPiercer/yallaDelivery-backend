@@ -6,6 +6,7 @@ import * as bcrypt from 'bcryptjs';
 import { Role } from '../../common/enums/role.enum';
 import { Vendor } from '../vendor/entities/vendor.entity';
 import { ConflictException } from '@nestjs/common';
+import { Admin } from '../admin/entities/admin.entity';
 export class UserRepository {
   constructor(
     @InjectRepository(User)
@@ -35,15 +36,20 @@ export class UserRepository {
     switch (dto.role) {
       case Role.Vendor:
         // create vendor
-
         return await this.userRepository
           .save({ ...dto, password })
           .then(async (user) => {
             await this.entityManager.save(Vendor, { user: user });
-
             return user;
           });
-
+      case Role.Admin:
+        // create admin
+        return await this.userRepository
+          .save({ ...dto, password })
+          .then(async (user) => {
+            await this.entityManager.save(Admin, { user: user });
+            return user;
+          });
       default:
         return this.userRepository.save({ ...dto, password });
     }

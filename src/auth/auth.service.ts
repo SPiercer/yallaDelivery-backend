@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   async register(dto: CreateUserDto) {
-    const result = await this.entityManager.create(User,dto);
+    const result = this.entityManager.create(User,dto);
 
     const payload = { username: result.email, uuid: result.id };
     const { password, ...user } = result;
