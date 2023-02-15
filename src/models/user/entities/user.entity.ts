@@ -34,11 +34,11 @@ export class User {
   cart: Cart;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at?: Date | null;
+  updatedAt?: Date | null;
 
   @DeleteDateColumn()
-  deleted_at?: Date | null;
+  deletedAt?: Date | null;
 }

@@ -7,6 +7,9 @@ import {
   Point,
   OneToMany,
   ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { Cart } from '../../cart/entities/cart.entity';
 import { Vendor } from '../../vendor/entities/vendor.entity';
@@ -22,4 +25,13 @@ export class Order {
 
   @ManyToOne(() => Vendor, (vendor) => vendor.orders)
   vendor: Vendor;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt?: Date | null;
+
+  @DeleteDateColumn()
+  deletedAt?: Date | null;s
 }

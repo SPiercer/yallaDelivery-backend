@@ -7,9 +7,14 @@ import {
     Point,
     OneToMany,
     ManyToOne,
+    CreateDateColumn,
+    UpdateDateColumn,
+    DeleteDateColumn,
   } from 'typeorm';
 import { Product } from '../../product/entities/product.entity';
 import { Vendor } from '../../vendor/entities/vendor.entity';
+
+@Entity('categories')
 export class Category {
     @PrimaryGeneratedColumn({ type: 'bigint', name: 'id', unsigned: true })
     id: number;
@@ -22,4 +27,13 @@ export class Category {
 
     @OneToMany(() => Product, (product) => product.category)
     products: Product[];
+
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @UpdateDateColumn()
+    updatedAt?: Date | null;
+  
+    @DeleteDateColumn()
+    deletedAt?: Date | null;
 }
