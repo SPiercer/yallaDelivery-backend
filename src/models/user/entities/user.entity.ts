@@ -2,18 +2,13 @@ import {
   Column,
   Entity,
   OneToOne,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
 } from 'typeorm';
 import { Role } from '../../../common/enums/role.enum';
+import { BaseModel } from '../../base.model';
 import { Cart } from '../../cart/entities/cart.entity';
 
 @Entity('users')
-export class User {
-  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id', unsigned: true })
-  id: string;
+export class User extends BaseModel {
 
   @Column('varchar', { name: 'email', unique: true, length: 255 })
   email: string;
@@ -32,13 +27,4 @@ export class User {
 
   @OneToOne(() => Cart, (cart) => cart.user)
   cart: Cart;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt?: Date | null;
-
-  @DeleteDateColumn()
-  deletedAt?: Date | null;
 }

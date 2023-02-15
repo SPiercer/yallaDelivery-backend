@@ -11,14 +11,12 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
   } from 'typeorm';
+import { BaseModel } from '../../base.model';
 import { Product } from '../../product/entities/product.entity';
 import { Vendor } from '../../vendor/entities/vendor.entity';
 
 @Entity('categories')
-export class Category {
-    @PrimaryGeneratedColumn({ type: 'bigint', name: 'id', unsigned: true })
-    id: number;
-
+export class Category extends BaseModel {
     @Column({ type: 'varchar', length: 255, nullable: false })
     name: string;
     
@@ -27,13 +25,4 @@ export class Category {
 
     @OneToMany(() => Product, (product) => product.category)
     products: Product[];
-
-    @CreateDateColumn()
-    createdAt: Date;
-  
-    @UpdateDateColumn()
-    updatedAt?: Date | null;
-  
-    @DeleteDateColumn()
-    deletedAt?: Date | null;
 }

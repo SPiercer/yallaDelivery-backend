@@ -8,6 +8,7 @@ import { Role } from '../common/enums/role.enum';
 import { Vendor } from '../models/vendor/entities/vendor.entity';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
+import { Admin } from '../models/admin/entities/admin.entity';
 @Injectable()
 export class AuthService {
   constructor(
@@ -42,7 +43,15 @@ export class AuthService {
           vendor,
           access_token: this.jwtService.sign(payload),
         };
-
+      case Role.Admin:
+        const admin = await manager.findOne(Admin, {
+          where: { user: { id: user.id } },
+        });
+        return {
+          user,
+          admin,
+          access_token: this.jwtService.sign(payload),
+        };
       default:
         return {
           user,
