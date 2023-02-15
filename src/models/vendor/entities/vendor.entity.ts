@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, OneToOne ,JoinColumn ,Column ,Point,OneToMany } from 'typeorm';
+import { Category } from '../../category/entities/category.entity';
 import { Order } from '../../order/entities/order.entity';
 import { User } from '../../user/entities/user.entity';
 
@@ -45,7 +46,6 @@ export class Vendor {
     @Column('float', { name: 'profitRatio', nullable: true })
     profitRatio?: number;
     
-
     @OneToOne(() => User, (user) => user.id)
     @JoinColumn()
     user: User;
@@ -53,4 +53,6 @@ export class Vendor {
     @OneToMany(() => Order, (order) => order.vendor)
     orders: Order[];
 
+    @OneToMany(() => Category, (category) => category.vendor)
+    categories: Category[];
 }

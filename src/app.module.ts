@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './models/order/order.module';
 import { ModelsModule } from './product/models/models.module';
+import { CategoryModule } from './models/category/category.module';
 import { CartModule } from './models/cart/cart.module';
 import { ProductModule } from './models/product/product.module';
 import { ModelsModule } from './product/models/models.module';
@@ -21,6 +22,7 @@ import { ModelsModule } from './product/models/models.module';
     ModelsModule,
     ProductModule,
     CartModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [
