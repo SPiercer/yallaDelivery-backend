@@ -1,12 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, OneToOne ,JoinColumn ,Column ,Point,OneToMany } from 'typeorm';
+import { BaseModel } from '../../base.model';
 import { Category } from '../../category/entities/category.entity';
 import { Order } from '../../order/entities/order.entity';
 import { User } from '../../user/entities/user.entity';
 
 @Entity('vendors')
-export class Vendor {
-    @PrimaryGeneratedColumn({ type: 'bigint', name: 'id', unsigned: true })
-    id: string;
+export class Vendor extends BaseModel {
 
     @Column('varchar', { name: 'name', length: 255 , nullable: true })
     name?: string;

@@ -11,6 +11,7 @@ import { AdminModule } from './models/admin/admin.module';
 import { CategoryModule } from './models/category/category.module';
 import { CartModule } from './models/cart/cart.module';
 import { ProductModule } from './models/product/product.module';
+import { VendorModule } from './models/vendor/vendor.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ProductModule } from './models/product/product.module';
     CartModule,
     CategoryModule,
     AdminModule,
+    VendorModule,
   ],
   controllers: [AppController],
   providers: [

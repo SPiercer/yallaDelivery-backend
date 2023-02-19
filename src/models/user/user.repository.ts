@@ -7,6 +7,7 @@ import { Role } from '../../common/enums/role.enum';
 import { Vendor } from '../vendor/entities/vendor.entity';
 import { ConflictException } from '@nestjs/common';
 import { Admin } from '../admin/entities/admin.entity';
+import { CreateVendorDto } from '../vendor/dto/create-vendor.dto';
 export class UserRepository {
   constructor(
     @InjectRepository(User)
@@ -20,11 +21,12 @@ export class UserRepository {
     return this.userRepository.findOne(query);
   }
 
-  async create(dto: CreateUserDto): Promise<User> {
+  async create(dto: CreateUserDto): Promise<any> {
     // check if user exists
     const user = await this.userRepository.exist({
       where: { email: dto.email },
     });
+    console.log(user);
     if (user) {
       throw new ConflictException({
         message: 'User with this email already exists',
@@ -35,12 +37,16 @@ export class UserRepository {
     console.log(dto);
     switch (dto.role) {
       case Role.Vendor:
-        // create vendor
+        let vendor =
+          dto instanceof CreateVendorDto ? { ...dto, password } : null;
+
         return await this.userRepository
           .save({ ...dto, password })
           .then(async (user) => {
-            await this.entityManager.save(Vendor, { user: user });
-            return user;
+            return await this.entityManager.save(Vendor, {
+              ...vendor,
+              user: user,
+            });
           });
       case Role.Admin:
         // create admin

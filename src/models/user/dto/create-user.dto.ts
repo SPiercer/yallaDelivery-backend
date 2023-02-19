@@ -10,7 +10,7 @@ export class CreateUserDto {
     @IsNotEmpty()
     @MinLength(7)
     password: string;   
-
+    
     @IsNotEmpty()
     @Match(CreateUserDto, (dto: CreateUserDto) => dto.password, { message: 'Password confirmation does not match password' })
     passwordConfirmation: string;

@@ -4,5 +4,9 @@ Yalla Delivery is a food delivery service that allows users to order food from t
 
 ## Todo
 
+### Authentication
+
+- [ ] don't allow to change the password if the old password is the same as the new one
+
 - [ ] Add profile update functionality for every user type
 - [ ] Allow admin to add other users and its corresponding roles 
