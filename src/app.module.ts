@@ -9,9 +9,9 @@ import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './models/order/order.module';
 import { AdminModule } from './models/admin/admin.module';
 import { CategoryModule } from './models/category/category.module';
-import { CartModule } from './models/cart/cart.module';
 import { ProductModule } from './models/product/product.module';
 import { VendorModule } from './models/vendor/vendor.module';
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
   imports: [
@@ -20,7 +20,6 @@ import { VendorModule } from './models/vendor/vendor.module';
     AuthModule,
     OrderModule,
     ProductModule,
-    CartModule,
     CategoryModule,
     AdminModule,
     VendorModule,
@@ -31,6 +30,10 @@ import { VendorModule } from './models/vendor/vendor.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })

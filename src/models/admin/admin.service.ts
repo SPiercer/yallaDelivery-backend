@@ -16,14 +16,13 @@ export class AdminService {
     private readonly adminRepository: Repository<Admin>,
     private readonly userRepository: UserRepository,
   ) {}
-  
+
   async createVendor(dto: CreateVendorDto): Promise<any> {
     try {
       await this.userRepository.create(dto);
-      return {message: "done"};
+      return { message: 'done' };
     } catch (error) {
-      return {message: "any error has occured", ...{error}}
+      return { message: 'any error has occured', ...{ error } };
     }
-
   }
 }

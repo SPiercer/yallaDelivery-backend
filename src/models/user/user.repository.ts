@@ -37,17 +37,15 @@ export class UserRepository {
     console.log(dto);
     switch (dto.role) {
       case Role.Vendor:
-        let vendor =
-          dto instanceof CreateVendorDto ? { ...dto, password } : null;
-
         return await this.userRepository
           .save({ ...dto, password })
           .then(async (user) => {
             return await this.entityManager.save(Vendor, {
-              ...vendor,
+              ...dto,
               user: user,
             });
           });
+
       case Role.Admin:
         // create admin
         return await this.userRepository

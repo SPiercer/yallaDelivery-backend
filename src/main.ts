@@ -1,6 +1,11 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe, ValidationError, UnprocessableEntityException } from '@nestjs/common';
+import {
+  ValidationPipe,
+  ValidationError,
+  UnprocessableEntityException,
+} from '@nestjs/common';
+import { RolesGuard } from './common/guards/roles.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });

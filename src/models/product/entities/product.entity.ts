@@ -11,13 +11,11 @@ import {
     DeleteDateColumn,
     ManyToOne,
   } from 'typeorm';
+import { BaseModel } from '../../base.model';
 import { Category } from '../../category/entities/category.entity';
 
 @Entity('products')
-export class Product {
-    @PrimaryGeneratedColumn({ type: 'bigint', name: 'id', unsigned: true })
-    id: number;
- 
+export class Product extends BaseModel {
     @Column({ type: 'varchar', length: 255, nullable: false })
     name: string;
  
@@ -35,13 +33,4 @@ export class Product {
 
     @ManyToOne(() => Category, (category) => category.products)
     category: Category; 
-
-    @CreateDateColumn()
-    createdAt: Date;
-  
-    @UpdateDateColumn()
-    updatedAt?: Date | null;
-  
-    @DeleteDateColumn()
-    deletedAt?: Date | null;
 }
