@@ -26,7 +26,7 @@ export class CreateVendorDto extends CreateUserDto {
   @IsNotEmpty()
   branch: string;
 
-  @IsNotEmpty()
+  
   location: Point;
 
   @IsNotEmpty()
